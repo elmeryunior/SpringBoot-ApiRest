@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apirest.dao.PersonaDAO;
 import com.apirest.model.Persona;
 
+import io.swagger.annotations.ApiOperation;
+
 @CrossOrigin(origins = "http://localhost:4200",maxAge = 3600)
 @RestController
 @RequestMapping("personas")
@@ -25,26 +27,31 @@ public class PersonaRest {
 	@Autowired
 	private PersonaDAO personaDAO;
 	
+	@ApiOperation("Guardar usuario de un json")
 	@PostMapping("/guardar")
 	public void guardar(@RequestBody Persona persona) {
 		personaDAO.save(persona);
 	}
 	
+	@ApiOperation("Listar Usuario dado un ID")
 	@GetMapping("/listarId/{id}")
 	public Persona listarId(@PathVariable("id") Integer id){
 		return personaDAO.findById(id).orElse(null);
 	}
 	
+	@ApiOperation("Visualizar listado de usuarios")
 	@GetMapping("/listar")
 	public List<Persona> listar(){
 		return personaDAO.findAll();
 	}
 
+	@ApiOperation("Eliminar usuario dado un ID")
 	@DeleteMapping("/eliminar/{id}")
 	public void eliminar(@PathVariable("id") Integer id) {
 		personaDAO.deleteById(id);
 	}
 	
+	@ApiOperation("Actualizar usuario mediante un json")
 	@PutMapping("/actualizar")
 	public void actualizar(@RequestBody Persona persona) {
 		personaDAO.save(persona);
